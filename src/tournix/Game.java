@@ -1,23 +1,28 @@
 package tournix;
 
+import java.util.Observable;
+import java.util.Observer;
+
 import tournix.deviator.Deviator;
 import tournix.deviator.Final;
 import tournix.deviator.Gravitor;
 import tournix.util.Vector;
 
-public class Game {
-	public enum Mode {
-		Placement, Run
-	}
+public class Game implements Observer {
 	
 	public Scene scene = new Scene();
 	public Selector selector = new Selector();
-	public Spawner spawner = new Spawner(new Vector(100,500), new Vector(1,0), 5);
+	public Spawner spawner = new Spawner(new Vector(0,500), new Vector(1,0), 5);
 	public Score score = new Score();
-	public Placer placer = new Placer();
-	public Mode mode = Mode.Placement;
+	public Mover mover = new Mover();
+	
+	private int round = 0;
 	
 	public Game() {
+		scene.addObserver(this);
+		selector.addObserver(this);
+		
+		//scene creation:
 		Deviator a = new Gravitor();
 		Deviator a2 = new Gravitor();
 		Final f = new Final();
@@ -44,5 +49,31 @@ public class Game {
 
 	public void mouseClicked() {
 		selector.mouseClicked();
+	}
+
+	public void mousePressed() {
+		mover.mousePressed();
+	}
+
+	public void mouseReleased() {
+		mover.mouseReleased();
+	}
+
+	public void mouseDragged() {
+		mover.mouseDragged();
+	}
+	
+	@Override
+	public void update(Observable o, Object arg) {
+		if (o == scene) {
+			if (arg == Scene.allUnitsRemovedMsg) {
+				mover.active = true;
+			}
+		} else if (o == selector) {
+			if (arg == Selector.allDeviatorPlacedMsg) {
+				Tournix.game.spawner.start();
+				mover.active = false;
+			}
+		}
 	}
 }

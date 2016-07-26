@@ -2,6 +2,7 @@ package tournix;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 import processing.core.PApplet;
 import tournix.deviator.Circle;
@@ -9,8 +10,9 @@ import tournix.deviator.Deviator;
 import tournix.deviator.Gravitor;
 import tournix.util.Master;
 
-public class Selector {
+public class Selector extends Observable {
 	
+	public static final String allDeviatorPlacedMsg = "allDeviatorPlacedMsg";
 	public final float boxSize = 60;
 	public final float marginHolder = boxSize;
 	public final float marginShape = boxSize/5;
@@ -92,8 +94,10 @@ public class Selector {
 		} else if (toPlaceCurrent != null) {
 			Tournix.game.scene.deviators.add(toPlaceCurrent);
 			toPlaceCurrent = null;
-			if (toPlace.size()==0)
-				Tournix.game.spawner.start();
+			if (toPlace.size()==0) {
+				setChanged();
+				notifyObservers(allDeviatorPlacedMsg);
+			}
 		}
 	}
 }

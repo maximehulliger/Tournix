@@ -54,13 +54,6 @@ public abstract class Master {
 		println(Arrays.toString(array));
 	}
 	
-	/** angle en radian => [-pi, pi] */
-	public static float entrePiEtMoinsPi(float a) {
-		if (a > PApplet.PI) return a - PApplet.TWO_PI;
-		else if (a < -PApplet.PI) return a + PApplet.TWO_PI;
-		else return a;
-	}
-	
 	/** [min, max] => [min2, max2] */
 	public static float map(float val, float min, float max, float min2, float max2, boolean constrain) {
 		return (clamp(val, min, max, constrain)-min)/(max-min)*(max2-min2) + min2;

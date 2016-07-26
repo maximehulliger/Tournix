@@ -3,6 +3,7 @@ package tournix.deviator;
 import tournix.Tournix;
 import tournix.Unit;
 import tournix.util.Master;
+import tournix.util.Vector;
 
 public abstract class Circle extends Deviator {
 	public float radiusMin = 10, radiusMax = 80;
@@ -16,6 +17,10 @@ public abstract class Circle extends Deviator {
 	public void draw() {
 		Tournix.app.ellipse(location.x, location.y, radiusMax*2, radiusMax*2);
 		Tournix.app.ellipse(location.x, location.y, radiusMin*2, radiusMin*2);
+	}
+	
+	public boolean in(Vector point) {
+		return point.minus(location).magSq() < Master.sq(radiusMax);
 	}
 	
 	public static boolean doCollide(Circle c1, Circle c2) {

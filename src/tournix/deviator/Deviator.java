@@ -10,6 +10,8 @@ public abstract class Deviator {
 	
 	public abstract void attractTo(Unit unit);
 	
+	public abstract boolean in(Vector point);
+	
 	public abstract void draw();
 	
 	public void onTouch(Unit unit) {

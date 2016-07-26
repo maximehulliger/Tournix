@@ -56,4 +56,16 @@ public class Tournix extends PApplet {
 	public void mouseClicked() {
 		game.mouseClicked();
 	}
+	
+	public void mousePressed() {
+		game.mousePressed();
+	}
+	
+	public void mouseReleased() {
+		game.mouseReleased();
+	}
+
+	public void mouseDragged() {
+		game.mouseDragged();
+	}
 }
