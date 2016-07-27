@@ -63,7 +63,6 @@ public class Game implements Observer {
 		mover.mouseDragged();
 	}
 	
-	@Override
 	public void update(Observable o, Object arg) {
 		if (o == scene) {
 			if (arg == Scene.allUnitsRemovedMsg) {

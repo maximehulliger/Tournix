@@ -8,6 +8,7 @@ import processing.core.PApplet;
 import tournix.deviator.Circle;
 import tournix.deviator.Deviator;
 import tournix.deviator.Gravitor;
+import tournix.util.Etat;
 import tournix.util.Master;
 
 public class Selector extends Observable {
@@ -16,8 +17,7 @@ public class Selector extends Observable {
 	public final float boxSize = 60;
 	public final float marginHolder = boxSize;
 	public final float marginShape = boxSize/5;
-	public float etatBoxes = 0;
-	private final float transitionTimeBoxes = 0.7f;
+	private final Etat transitionBoxes = new Etat(0.7f).start();
 	private float boxLeft = marginHolder;
 	private final int nbBoxMax = 3;
 	
@@ -29,11 +29,7 @@ public class Selector extends Observable {
 	public void draw() {
 		int nbBox = Master.min(nbBoxMax, toPlace.size());
 		
-		if (etatBoxes < 1) {
-			etatBoxes += 1f/(Tournix.fps*transitionTimeBoxes);
-			if (etatBoxes > 1)
-				etatBoxes = 1;
-		}
+		final float etatBoxes = transitionBoxes.etat();
 		
 		for (int i=0; i<nbBox; i++) {
 			final int b=nbBoxMax-i-1;
@@ -88,7 +84,7 @@ public class Selector extends Observable {
 			} else {
 				toPlaceCurrent = toPlace.get(0);
 				toPlace.remove(0);
-				etatBoxes = 0;
+				transitionBoxes.start();
 			}
 		//click with a selected deviator
 		} else if (toPlaceCurrent != null) {

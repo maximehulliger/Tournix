@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import processing.core.PApplet;
+import tournix.util.Etat;
 import tournix.util.Master;
 import tournix.util.Vector;
 
@@ -37,7 +38,7 @@ public class Score {
 		float x = PApplet.cos(angle)*width(score)*scoreSize;
 		float y = PApplet.sin(angle)*scoreSize;
 		Vector toStart = new Vector(x,y);
-		Vector run = toStart.withMag(-30);
+		Vector run = toStart.withMag(30);
 		scoreChanges.add(new ScoreChange(change, scorePos.plus(toStart), run));
 	}
 	
@@ -53,26 +54,25 @@ public class Score {
 	private class ScoreChange {
 
 		private static final float duration = 0.7f;
-		private final int change, startTime;
+		private final Etat runTrans = new Etat(duration).start();
+		private final String text;
 		private final Vector startPos, run;
 		
 		public ScoreChange(int change, Vector startPos, Vector run) {
-			this.change = change;
+			this.text = (change>0?"+":"")+change;
 			this.startPos = startPos;
 			this.run = run;
-			this.startTime = Tournix.app.millis();
 		}
 		
 		public void draw() {
-			final float etat = (startTime - Tournix.app.millis())/(duration*1000);
-			final Vector pos = startPos.plus(run.multBy(etat));
+			final Vector pos = startPos.plus(run.multBy(runTrans.etat()));
 			Tournix.app.textSize(scoreSize/2);
 			Tournix.app.textAlign(PApplet.CENTER, PApplet.CENTER);
-			Tournix.app.text((change>0?"+":"")+change, pos.x, pos.y);
+			Tournix.app.text(text, pos.x, pos.y);
 		}
 		
 		public boolean dead() {
-			return Tournix.app.millis() > startTime + duration * 1000;
+			return runTrans.etat() == 1;
 		}
 	}
 }

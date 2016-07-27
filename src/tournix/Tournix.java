@@ -19,8 +19,8 @@ public class Tournix extends PApplet {
 	}
 	
 	public Tournix() {
-		game = new Game();
 		app = this;
+		game = new Game();
 	}
 	
 	/** Launch the whole software. */
