@@ -5,6 +5,7 @@ import java.awt.GraphicsEnvironment;
 
 import processing.core.PApplet;
 import processing.core.PVector;
+import tournix.util.Mouse;
 
 public class Tournix extends PApplet {
 	/** Main window size. */
@@ -12,6 +13,7 @@ public class Tournix extends PApplet {
 	public static final float fps = 30;
 	
 	public static Game game;
+	public static Mouse mouse = new Mouse();
 	public static PApplet app;
 	
 	public static void main(String args[]) {
@@ -54,18 +56,22 @@ public class Tournix extends PApplet {
 	}
 	
 	public void mouseClicked() {
-		game.mouseClicked();
+		mouse.mouseClicked();
 	}
 	
 	public void mousePressed() {
-		game.mousePressed();
+		mouse.mousePressed();
 	}
 	
 	public void mouseReleased() {
-		game.mouseReleased();
+		mouse.mouseReleased();
+	}
+
+	public void mouseMoved() {
+		mouse.mouseMoved();
 	}
 
 	public void mouseDragged() {
-		game.mouseDragged();
+		mouse.mouseDragged();
 	}
 }

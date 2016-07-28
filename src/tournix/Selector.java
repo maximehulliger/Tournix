@@ -3,6 +3,7 @@ package tournix;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 
 import processing.core.PApplet;
 import tournix.deviator.Circle;
@@ -10,8 +11,9 @@ import tournix.deviator.Deviator;
 import tournix.deviator.Gravitor;
 import tournix.util.Etat;
 import tournix.util.Master;
+import tournix.util.Mouse;
 
-public class Selector extends Observable {
+public class Selector extends Observable implements Observer {
 	
 	public static final String allDeviatorPlacedMsg = "allDeviatorPlacedMsg";
 	public final float boxSize = 60;
@@ -25,6 +27,10 @@ public class Selector extends Observable {
 	private Deviator toPlaceCurrent = null;
 	private float etatToPlaceError = 1; //0:err, 1: Ok
 	private final float toPlaceErrorTransitionTime = 0.4f;
+	
+	public Selector() {
+		Tournix.mouse.addObserver(this);
+	}
 	
 	public void draw() {
 		int nbBox = Master.min(nbBoxMax, toPlace.size());
@@ -73,27 +79,31 @@ public class Selector extends Observable {
 			toPlaceCurrent.draw();
 		}
 	}
-	
-	public void mouseClicked() {
-		// click on a box
-		if (toPlace.size() > 0 &&
-				Tournix.app.mouseX >= boxLeft && Tournix.app.mouseX <= boxLeft+boxSize
-				&& Tournix.app.mouseY >= marginHolder && Tournix.app.mouseY <= marginHolder+boxSize) {
-			if (toPlaceCurrent != null) {
-				etatToPlaceError = 0;
-			} else {
-				toPlaceCurrent = toPlace.get(0);
-				toPlace.remove(0);
-				transitionBoxes.start();
-			}
-		//click with a selected deviator
-		} else if (toPlaceCurrent != null) {
-			Tournix.game.scene.deviators.add(toPlaceCurrent);
-			toPlaceCurrent = null;
-			if (toPlace.size()==0) {
-				setChanged();
-				notifyObservers(allDeviatorPlacedMsg);
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (arg == Mouse.mouseClicked) {
+			// click on a box
+			if (toPlace.size() > 0 &&
+					Tournix.app.mouseX >= boxLeft && Tournix.app.mouseX <= boxLeft+boxSize
+					&& Tournix.app.mouseY >= marginHolder && Tournix.app.mouseY <= marginHolder+boxSize) {
+				if (toPlaceCurrent != null) {
+					etatToPlaceError = 0;
+				} else {
+					toPlaceCurrent = toPlace.get(0);
+					toPlace.remove(0);
+					transitionBoxes.start();
+				}
+			//click with a selected deviator
+			} else if (toPlaceCurrent != null) {
+				Tournix.game.scene.deviators.add(toPlaceCurrent);
+				toPlaceCurrent = null;
+				if (toPlace.size()==0) {
+					setChanged();
+					notifyObservers(allDeviatorPlacedMsg);
+				}
 			}
 		}
+		
 	}
 }

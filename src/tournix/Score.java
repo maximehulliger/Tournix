@@ -42,12 +42,12 @@ public class Score {
 		scoreChanges.add(new ScoreChange(change, scorePos.plus(toStart), run));
 	}
 	
-	private static final float logE10 = PApplet.log(10);
+	private static final float logE10Inv = 1/PApplet.log(10);
 	private int width(int x) {
 		boolean neg = x<0;
 		if (neg)
 			x = -x;
-		float log10 = PApplet.log(x) / logE10;
+		float log10 = PApplet.log(x) * logE10Inv;
 		return (int)log10 + (neg ? 1 : 0);
 	}
 	

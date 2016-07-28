@@ -47,22 +47,6 @@ public class Game implements Observer {
 		score.draw();
 	}
 
-	public void mouseClicked() {
-		selector.mouseClicked();
-	}
-
-	public void mousePressed() {
-		mover.mousePressed();
-	}
-
-	public void mouseReleased() {
-		mover.mouseReleased();
-	}
-
-	public void mouseDragged() {
-		mover.mouseDragged();
-	}
-	
 	public void update(Observable o, Object arg) {
 		if (o == scene) {
 			if (arg == Scene.allUnitsRemovedMsg) {
