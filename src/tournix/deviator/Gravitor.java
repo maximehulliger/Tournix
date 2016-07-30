@@ -18,12 +18,11 @@ public class Gravitor extends Circle {
 		else if (distSq <= Master.sq(radiusMax)){
 			float gForce = force/(toThis.mag());
 			unit.accelerate(toThis.normalized().multBy(gForce));
-			//unit.accelerate(champ.cross(unit.velocity));
 		}
 	}
 	
 	public void onTouch(Unit unit) {
-		super.onTouch(unit);
+		Tournix.game.scene.destroy(unit);
 		Tournix.game.score.change(-5);
 	}
 }

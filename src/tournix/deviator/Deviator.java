@@ -1,6 +1,5 @@
 package tournix.deviator;
 
-import tournix.Tournix;
 import tournix.Unit;
 import tournix.util.Vector;
 
@@ -14,7 +13,5 @@ public abstract class Deviator {
 	
 	public abstract void draw();
 	
-	public void onTouch(Unit unit) {
-		Tournix.game.scene.remove(unit);
-	}
+	public abstract void onTouch(Unit unit);
 }

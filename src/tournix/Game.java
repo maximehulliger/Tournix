@@ -10,31 +10,27 @@ public class Game implements Observer {
 	
 	public Scene scene = new Scene();
 	public Selector selector = new Selector();
-	public Spawner spawner = new Spawner();
 	public Score score = new Score();
 	public Mover mover = new Mover();
-	public Button statusButton = new Button(new Vector(350,50), new Vector(300, 100), "Start !");
+	public Button statusButton = new Button(new Vector(300,50), new Vector(400, 100), "Start !");
 	
-	private int round = 1, levelIndex = 0;
+	private int round = 1, levelIndex = -1;
 	
 	public Game() {
-		Tournix.game = this;
 		scene.addObserver(this);
 		selector.addObserver(this);
 		statusButton.visible = false;
 		
-		Level.levels[levelIndex].load();
+		loadNextLevel();
 	}
 	
 	public void update() {
-		spawner.update();
 		scene.update();
 	}
 
 	public void draw() {
 		Tournix.app.background(0);
 		scene.draw();
-		spawner.draw();
 		selector.draw();
 		score.draw();
 		statusButton.draw();
@@ -69,24 +65,27 @@ public class Game implements Observer {
 	}
 	
 	private void startRun() {
-		Tournix.game.spawner.start();
+		score.score = 0;
+		Tournix.game.scene.spawner.start();
 		mover.active = false;
 		statusButton.visible = false;
-		score.score = 0;
 	}
 	
 	private void restart() {
-		
+		levelIndex--;
+		statusButton.visible = false;
+		loadNextLevel();
 	}
 	
 	private void loadNextLevel() {
+		score.score = 0;
 		round = 1;
 		levelIndex ++;
 		if (levelIndex >= Level.levels.length) {
 			// load end screen
 		} else {
 			scene.clear();
-			Level.levels[levelIndex].load();
+			Level.levels[levelIndex].load(this);
 		}
 	}
 }
