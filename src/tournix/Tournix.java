@@ -51,6 +51,7 @@ public class Tournix extends PApplet {
 	
 	public void keyPressed() {
 		if (key == 'r') {
+			mouse.deleteObservers();
 			game = new Game();
 		}
 	}

@@ -10,8 +10,8 @@ public class Spawner {
 	private final Vector front, right;
 	private final Vector frontIn, rightIn;
 	private final float spawnDuration = 5;
-	private final int unitSpawn = 201;
-	private int unitLeft = unitSpawn;
+	private final int unitSpawn = 200;
+	private int unitLeft;
 	private float unitAcc = 0;
 	private final float initialVelocity;
 	private boolean started = false;
@@ -28,6 +28,7 @@ public class Spawner {
 	
 	public void start() {
 		started = true;
+		unitLeft = unitSpawn;
 	}
 	
 	public void update() {

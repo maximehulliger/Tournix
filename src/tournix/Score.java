@@ -11,7 +11,7 @@ import tournix.util.Vector;
 public class Score {
 	
 	private static final Vector scorePos = new Vector(900, 50);
-	private int score = 0;
+	public int score = 0;
 	private float scoreSize = 32;
 	private List<ScoreChange> scoreChanges = new LinkedList<ScoreChange>();
 	
