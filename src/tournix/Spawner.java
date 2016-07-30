@@ -6,24 +6,23 @@ import tournix.util.Vector;
 public class Spawner {
 	
 	private final float lenght = 60, width = 20;
-	private final Vector location, direction;
-	private final Vector front, right;
-	private final Vector frontIn, rightIn;
+	private Vector location, direction;
+	private Vector front, right;
+	private Vector frontIn, rightIn;
 	private final float spawnDuration = 5;
 	private final int unitSpawn = 200;
 	private int unitLeft;
 	private float unitAcc = 0;
-	private final float initialVelocity;
+	private final float initialVelocity = 5;
 	private boolean started = false;
 	
-	public Spawner(Vector location, Vector direction, float initialVelocity) {
+	public void set(Vector location, Vector direction) {
 		this.location = location;
 		this.direction = direction;
 		this.front = direction.multBy(lenght+Unit.lenght);
 		this.right = direction.cross(Vector.zn).multBy(width+Unit.width/2);
 		this.frontIn = direction.multBy(lenght);
 		this.rightIn = direction.cross(Vector.zn).multBy(width);
-		this.initialVelocity = initialVelocity;
 	}
 	
 	public void start() {

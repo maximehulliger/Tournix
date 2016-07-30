@@ -4,6 +4,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import tournix.deviator.Deviator;
+import tournix.deviator.Final;
 import tournix.util.Mouse;
 
 /** Class responsible to place and move the deviators. */
@@ -20,7 +21,7 @@ public class Mover implements Observer {
 		if (arg == Mouse.mousePressed) {
 			// get a Deviator under the mouse.
 			for (Deviator d : Tournix.game.scene.deviators) {
-				if (d.in(Mouse.mousePos)) {
+				if (!(d instanceof Final) && d.in(Mouse.mousePos)) {
 					focused = d;
 					return;
 				}

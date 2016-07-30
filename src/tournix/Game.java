@@ -3,9 +3,6 @@ package tournix;
 import java.util.Observable;
 import java.util.Observer;
 
-import tournix.deviator.Deviator;
-import tournix.deviator.Final;
-import tournix.deviator.Gravitor;
 import tournix.util.Button;
 import tournix.util.Vector;
 
@@ -13,28 +10,20 @@ public class Game implements Observer {
 	
 	public Scene scene = new Scene();
 	public Selector selector = new Selector();
-	public Spawner spawner = new Spawner(new Vector(0,500), new Vector(1,0), 5);
+	public Spawner spawner = new Spawner();
 	public Score score = new Score();
 	public Mover mover = new Mover();
 	public Button statusButton = new Button(new Vector(350,50), new Vector(300, 100), "Start !");
 	
-	private int round = 1;
+	private int round = 1, levelIndex = 0;
 	
 	public Game() {
+		Tournix.game = this;
 		scene.addObserver(this);
 		selector.addObserver(this);
 		statusButton.visible = false;
 		
-		//scene creation:
-		Deviator a = new Gravitor();
-		Deviator a2 = new Gravitor();
-		Final f = new Final();
-		
-		f.location.set(900, 200);
-		
-		scene.deviators.add(f);
-		selector.toPlace.add(a);
-		selector.toPlace.add(a2);
+		Level.levels[levelIndex].load();
 	}
 	
 	public void update() {
@@ -91,6 +80,13 @@ public class Game implements Observer {
 	}
 	
 	private void loadNextLevel() {
-		
+		round = 1;
+		levelIndex ++;
+		if (levelIndex >= Level.levels.length) {
+			// load end screen
+		} else {
+			scene.clear();
+			Level.levels[levelIndex].load();
+		}
 	}
 }
