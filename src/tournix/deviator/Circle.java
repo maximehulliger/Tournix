@@ -15,6 +15,8 @@ public abstract class Circle extends Deviator {
 	public abstract void attractTo(Unit unit);
 
 	public void draw() {
+		Tournix.app.noFill();
+		Tournix.app.stroke(255);
 		Tournix.app.ellipse(location.x, location.y, radiusMax*2, radiusMax*2);
 		Tournix.app.ellipse(location.x, location.y, radiusMin*2, radiusMin*2);
 	}

@@ -32,7 +32,11 @@ public class Etat {
 			return elapsedTime*durationInv;
 	}
 	
-	public class Crete extends Etat {
+	public boolean over() {
+		return elapsedTime() > duration;
+	}
+	
+	public static class Crete extends Etat {
 		private final float creteTime, creteTimeInv, creteTimeComplInv;
 		/** creteTime: ]0,1[ */
 		public Crete(float duration, float creteTime) {
@@ -50,7 +54,7 @@ public class Etat {
 			float e = super.etat();
 			if (e == 1)
 				return 0;
-			else if (e > creteTime)
+			else if (e < creteTime)
 				return e*creteTimeInv;
 			else 			
 				return (1-e)*creteTimeComplInv;

@@ -7,14 +7,14 @@ public class Color {
 	
 	private final int[] c;
 
-	public final Color white = new Color(255);
-	public final Color grey = new Color(150);
-	public final Color black = new Color(0);
-	public final Color red = new Color(255, 0, 0);
-	public final Color green = new Color(255, 0, 0);
-	public final Color blue = new Color(0, 0, 255);
-	public final Color yellow = new Color(255,255,0);
-	public final Color pink = new Color(255, 105, 180);
+	public static final Color white = new Color(255);
+	public static final Color grey = new Color(150);
+	public static final Color black = new Color(0);
+	public static final Color red = new Color(255, 0, 0);
+	public static final Color green = new Color(255, 0, 0);
+	public static final Color blue = new Color(0, 0, 255);
+	public static final Color yellow = new Color(255,255,0);
+	public static final Color pink = new Color(255, 105, 180);
 	
 	/**
 	 * understand 4 arguments for a color: wether c, ca, rgb or rgba equivalent to:
@@ -32,12 +32,12 @@ public class Color {
 			this.c = rgba;
 	}
 
-	public Color random(int a) {
+	public static Color random(int a) {
 		return new Color(Master.random(0, 256), Master.random(0, 256), Master.random(0, 256), a);
 	}
 
-	public Color random() {
-		return random(256);
+	public static Color random() {
+		return random(255);
 	}
 
 	/** apply the color in fill. */

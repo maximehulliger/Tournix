@@ -1,6 +1,7 @@
 package tournix;
 
 import processing.core.PVector;
+import tournix.util.Color;
 import tournix.util.Vector;
 
 public class Unit {
@@ -8,7 +9,7 @@ public class Unit {
 	public Vector location = new Vector(),
 			velocity = new Vector(); 
 	private Vector direction = new Vector(1, 0);
-	
+	public final Color color = Color.random(256);
 	
 	public static final float lenght = 15, width = 5;
 	
@@ -23,6 +24,8 @@ public class Unit {
 				this.direction : velocity.normalized();
 		PVector front = direction.multBy(lenght);
 		PVector right = direction.cross(Vector.zn).multBy(width);
+		Tournix.app.noFill();
+		color.stroke();
 		Tournix.app.triangle(-right.x, -right.y, front.x, front.y, right.x, right.y);
 		Tournix.app.popMatrix();
 	}

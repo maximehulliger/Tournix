@@ -57,6 +57,8 @@ public class Spawner {
 	public void draw() {
 		Tournix.app.pushMatrix();
 		Tournix.app.translate(location.x, location.y);
+		Tournix.app.noFill();
+		Tournix.app.stroke(255);
 		Tournix.app.triangle(-right.x, -right.y, front.x, front.y, right.x, right.y);
 		Tournix.app.popMatrix();
 	}
